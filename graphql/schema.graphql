@@ -14,26 +14,38 @@ type Query {
 
     "List multiple users."
     # Filters by name. Accepts SQL LIKE wildcards `%` and `_`.
-    users(name: String @where(operator: "like")): [User!]! @paginate(defaultCount: 10)
+    # users(name: String @where(operator: "like")): [User!]! @paginate(defaultCount: 10)
    
     allUsers: [User!]! @all
-    me: User
-
     # userById(id: ID! @eq): User @find
     userById(id: ID! @whereKey): User @find
-    
+
     # @eq directive filters the query to only return users where the id exactly matches the provided value
     # The exclamation mark (!) means that this argument is non-nullable, 
     # which means that you must provide an id value when you call this query. 
-    # If you don't provide it, the query will fail. 
+    # If you don't provide it, the query will fail.
+
+    users: [User!]! @hasMany(relation: "tasks") 
+
+    tasks: [Task!]! @all
+    task(id: ID! @eq): Task @find
 }
 
-"Account of a person who utilizes this application."
+
 type User {
     id: ID!
     name: String!
     email: String!
     email_verified_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+    tasks: [Task!] @hasMany
+}
+
+type Task {
+    id: ID!
+    name: String!
+    user: User! @belongsTo
     created_at: DateTime!
     updated_at: DateTime!
 }
