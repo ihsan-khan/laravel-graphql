@@ -1,0 +1,13 @@
+extend type Query {
+    tasks: [Task!]! @all
+    task(id: ID! @eq): Task @find
+}
+
+type Task {
+    id: ID!
+    name: String!
+    user: User! @belongsTo
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
