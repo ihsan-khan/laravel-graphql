@@ -3,6 +3,12 @@ extend type Query {
     task(id: ID! @eq): Task @find
 }
 
+extend type Mutation {
+    createTask(user_id: Int!, name:String!): Task @create
+    updateTask(id: ID!, name:String!): Task @update
+    deleteTask(id: ID! @whereKey): Task! @delete
+}
+
 type Task {
     id: ID!
     name: String!
