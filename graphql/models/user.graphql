@@ -12,7 +12,7 @@ extend type Query {
     # Filters by name. Accepts SQL LIKE wildcards `%` and `_`.
     # users(name: String @where(operator: "like")): [User!]! @paginate(defaultCount: 10)
    
-    allUsers: [User!]! @all
+    allUsers: [User!]! @paginate
     # userById(id: ID! @eq): User @find
     userById(id: ID! @whereKey): User @find
 
